@@ -475,11 +475,11 @@ export default function Dashboard() {
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="w-3 h-0.5 bg-orange-400" style={{borderStyle: 'dashed'}}></span>
-                    <span className="text-zinc-300">Buy & Hold</span>
+                    <span className="text-zinc-300">PEA-E 100%</span>
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="w-3 h-0.5 bg-pink-400"></span>
-                    <span className="text-zinc-300">Bond</span>
+                    <span className="text-zinc-300">PEA-F 100%</span>
                   </span>
                 </div>
               </div>
