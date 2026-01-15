@@ -1,0 +1,89 @@
+{
+  "updated_at": "2026-01-15 14:52:32",
+  "updated_timestamp": "2026-01-15T14:52:32.032826",
+  "prediction": {
+    "ticker": "TDEX.BK",
+    "date": "2026-01",
+    "prediction": "Bullish",
+    "probability": 0.5857289618502851,
+    "recommended_allocation": 50,
+    "allocation_reasoning": "สัญญาณกลางๆ แนะนำ PEA-E 50%",
+    "weather": "🌥️ มีเมฆ",
+    "action": "สัญญาณกลางๆ แนะนำ PEA-E 50%",
+    "ml_details": {
+      "individual_models": {
+        "xgb": {
+          "prediction": 1,
+          "confidence": 0.6729525923728943
+        },
+        "rf": {
+          "prediction": 0,
+          "confidence": 0.5448149230787293
+        },
+        "gb": {
+          "prediction": 1,
+          "confidence": 0.6290492162566903
+        }
+      },
+      "ensemble_proba": {
+        "down": 0.41427103814971494,
+        "up": 0.5857289618502851
+      }
+    },
+    "ml_features": {
+      "Return_1m": 0.6,
+      "Return_3m": -0.95,
+      "RSI_6": 69.1,
+      "Price_SMA6_Ratio": 1.53,
+      "Volatility_3m": 2.47,
+      "Drawdown": -5.27
+    },
+    "top_features": [
+      {
+        "name": "SMA_3",
+        "importance": 0.0640999972820282
+      },
+      {
+        "name": "Return_12m",
+        "importance": 0.05640000104904175
+      },
+      {
+        "name": "SMA_12",
+        "importance": 0.053199999034404755
+      },
+      {
+        "name": "SMA_6",
+        "importance": 0.05310000106692314
+      },
+      {
+        "name": "Return_Lag1",
+        "importance": 0.05249999836087227
+      }
+    ]
+  },
+  "backtest": {
+    "period": {
+      "start": "34",
+      "end": "48",
+      "months": 14
+    },
+    "returns": {
+      "strategy_return_pct": 10.98,
+      "buy_hold_return_pct": -5.06,
+      "excess_return_pct": 16.05
+    },
+    "metrics": {
+      "win_rate_pct": 71.4,
+      "total_trades": 14,
+      "correct_trades": 10,
+      "sharpe_ratio": 1.53,
+      "max_drawdown_pct": -1.18,
+      "volatility_pct": 5.96
+    }
+  },
+  "model_info": {
+    "type": "ML Ensemble (XGB + RF + GB)",
+    "ticker": "TDEX.BK",
+    "last_trained": "2026-01-15T12:49:25.178941"
+  }
+}
