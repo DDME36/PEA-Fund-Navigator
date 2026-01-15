@@ -406,7 +406,9 @@ export default function Dashboard() {
             {/* Performance Chart */}
             {backtest.history && backtest.history.length > 0 && (
               <div className="mt-4 p-3 rounded-xl bg-zinc-900/50">
-                <p className="text-[10px] sm:text-xs text-zinc-400 mb-3">เปรียบเทียบผลตอบแทน (เริ่มต้น 100)</p>
+                <p className="text-[10px] sm:text-xs text-zinc-400 mb-3">
+                  เปรียบเทียบผลตอบแทน {backtest.history.length} เดือน ({backtest.history[0]?.date} ถึง {backtest.history[backtest.history.length - 1]?.date})
+                </p>
                 
                 {/* Simple Line Chart */}
                 <div className="relative h-32 sm:h-40 pr-14">
