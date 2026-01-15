@@ -277,6 +277,61 @@ export default function Dashboard() {
           </div>
         </section>
 
+        {/* Trend & Recommendation */}
+        {prediction.trend && (
+          <section className="animate-fade-in-up delay-250" aria-label="แนวโน้มและคำแนะนำ">
+            <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800/50">
+              {/* Trend Header */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">{prediction.trend.trend_icon}</span>
+                  <span className="text-sm font-medium text-white">{prediction.trend.trend}</span>
+                </div>
+                <div className="text-xs text-zinc-400">
+                  คะแนน {prediction.trend.trend_score}/100
+                </div>
+              </div>
+              
+              {/* Recommendation Box */}
+              <div className={`p-3 rounded-xl mb-3 ${
+                prediction.trend.comparison.recommendation.includes('PEA-E') 
+                  ? 'bg-cyan-500/10 border border-cyan-500/20' 
+                  : 'bg-pink-500/10 border border-pink-500/20'
+              }`}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`text-sm font-medium ${
+                    prediction.trend.comparison.recommendation.includes('PEA-E') 
+                      ? 'text-cyan-400' 
+                      : 'text-pink-400'
+                  }`}>
+                    {prediction.trend.comparison.recommendation.includes('PEA-E') ? '💎' : '🛡️'} {prediction.trend.comparison.recommendation}
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-300">{prediction.trend.comparison.reason}</p>
+              </div>
+              
+              {/* Momentum Pills */}
+              <div className="flex gap-2 flex-wrap">
+                <span className={`px-2 py-1 rounded-full text-xs ${
+                  prediction.trend.momentum["1m"] >= 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  1 เดือน: {prediction.trend.momentum["1m"] > 0 ? '+' : ''}{prediction.trend.momentum["1m"]}%
+                </span>
+                <span className={`px-2 py-1 rounded-full text-xs ${
+                  prediction.trend.momentum["3m"] >= 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  3 เดือน: {prediction.trend.momentum["3m"] > 0 ? '+' : ''}{prediction.trend.momentum["3m"]}%
+                </span>
+                <span className={`px-2 py-1 rounded-full text-xs ${
+                  prediction.trend.momentum["6m"] >= 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  6 เดือน: {prediction.trend.momentum["6m"] > 0 ? '+' : ''}{prediction.trend.momentum["6m"]}%
+                </span>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Allocation Circle */}
         <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-in-up delay-300" aria-label="สัดส่วนการลงทุนที่แนะนำ">
           {/* Mascot - left side on desktop */}
@@ -347,6 +402,116 @@ export default function Dashboard() {
                 <div className="text-[10px] sm:text-xs text-zinc-300">ค่า Sharpe</div>
               </div>
             </div>
+            
+            {/* Performance Chart */}
+            {backtest.history && backtest.history.length > 0 && (
+              <div className="mt-4 p-3 rounded-xl bg-zinc-900/50">
+                <p className="text-[10px] sm:text-xs text-zinc-400 mb-3">เปรียบเทียบผลตอบแทน (เริ่มต้น 100)</p>
+                
+                {/* Simple Line Chart */}
+                <div className="relative h-32 sm:h-40 pr-14">
+                  <svg className="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                    {/* Grid lines */}
+                    <line x1="0" y1="50" x2="300" y2="50" stroke="#27272a" strokeWidth="0.5" strokeDasharray="4" />
+                    
+                    {/* Strategy line (cyan) */}
+                    <polyline
+                      fill="none"
+                      stroke="#22d3ee"
+                      strokeWidth="2"
+                      points={backtest.history.map((h, i) => {
+                        const x = (i / (backtest.history!.length - 1)) * 300;
+                        const minVal = Math.min(...backtest.history!.map(h => Math.min(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const maxVal = Math.max(...backtest.history!.map(h => Math.max(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const y = 100 - ((h.strategy_value - minVal) / (maxVal - minVal)) * 100;
+                        return `${x},${y}`;
+                      }).join(' ')}
+                    />
+                    
+                    {/* Buy & Hold line (orange) */}
+                    <polyline
+                      fill="none"
+                      stroke="#f97316"
+                      strokeWidth="2"
+                      strokeDasharray="4"
+                      points={backtest.history.map((h, i) => {
+                        const x = (i / (backtest.history!.length - 1)) * 300;
+                        const minVal = Math.min(...backtest.history!.map(h => Math.min(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const maxVal = Math.max(...backtest.history!.map(h => Math.max(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const y = 100 - ((h.buyhold_value - minVal) / (maxVal - minVal)) * 100;
+                        return `${x},${y}`;
+                      }).join(' ')}
+                    />
+                    
+                    {/* Bond line (pink) */}
+                    <polyline
+                      fill="none"
+                      stroke="#f472b6"
+                      strokeWidth="2"
+                      strokeDasharray="2"
+                      points={backtest.history.map((h, i) => {
+                        const x = (i / (backtest.history!.length - 1)) * 300;
+                        const minVal = Math.min(...backtest.history!.map(h => Math.min(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const maxVal = Math.max(...backtest.history!.map(h => Math.max(h.strategy_value, h.buyhold_value, h.bond_value)));
+                        const y = 100 - ((h.bond_value - minVal) / (maxVal - minVal)) * 100;
+                        return `${x},${y}`;
+                      }).join(' ')}
+                    />
+                  </svg>
+                  
+                  {/* Final values - outside chart */}
+                  <div className="absolute right-0 top-0 bottom-0 w-12 flex flex-col justify-between py-1 text-[10px] font-medium">
+                    <div className="text-cyan-400 bg-zinc-900/80 px-1 rounded">{backtest.history[backtest.history.length - 1].strategy_value}</div>
+                    <div className="text-pink-400 bg-zinc-900/80 px-1 rounded">{backtest.history[backtest.history.length - 1].bond_value}</div>
+                    <div className="text-orange-400 bg-zinc-900/80 px-1 rounded">{backtest.history[backtest.history.length - 1].buyhold_value}</div>
+                  </div>
+                </div>
+                
+                {/* Legend */}
+                <div className="flex justify-center gap-4 mt-2 text-[10px]">
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-0.5 bg-cyan-400"></span>
+                    <span className="text-zinc-300">AI Strategy</span>
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-0.5 bg-orange-400" style={{borderStyle: 'dashed'}}></span>
+                    <span className="text-zinc-300">Buy & Hold</span>
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-0.5 bg-pink-400"></span>
+                    <span className="text-zinc-300">Bond</span>
+                  </span>
+                </div>
+              </div>
+            )}
+            
+            {/* Allocation History */}
+            {backtest.history && backtest.history.length > 0 && (
+              <div className="mt-3 p-3 rounded-xl bg-zinc-900/50">
+                <p className="text-[10px] sm:text-xs text-zinc-400 mb-2">สัดส่วน PEA-E ที่แนะนำแต่ละเดือน</p>
+                <div className="flex gap-1 overflow-x-auto pb-1">
+                  {backtest.history.map((h, i) => (
+                    <div key={i} className="flex flex-col items-center min-w-[28px]">
+                      <div 
+                        className={`w-5 rounded-t text-[8px] flex items-end justify-center ${h.correct ? 'bg-cyan-500/60' : 'bg-pink-500/60'}`}
+                        style={{ height: `${h.allocation * 0.4}px` }}
+                      >
+                        {h.allocation > 50 && <span className="text-white/80">{h.allocation}</span>}
+                      </div>
+                      <div className="text-[8px] text-zinc-500 mt-1">{h.date.slice(-2)}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center gap-3 mt-2 text-[9px] text-zinc-400">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-sm bg-cyan-500/60"></span> ทายถูก
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-sm bg-pink-500/60"></span> ทายผิด
+                  </span>
+                </div>
+              </div>
+            )}
           </section>
         )}
 

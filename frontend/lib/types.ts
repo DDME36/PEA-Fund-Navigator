@@ -42,6 +42,28 @@ export interface TopFeature {
   importance: number;
 }
 
+export interface TrendAnalysis {
+  trend: string;
+  trend_icon: string;
+  trend_score: number;
+  momentum: {
+    "1m": number;
+    "3m": number;
+    "6m": number;
+  };
+  price_position: {
+    vs_sma3: string;
+    vs_sma6: string;
+    vs_sma12: string;
+  };
+  comparison: {
+    recommendation: string;
+    reason: string;
+    expected_equity: number;
+    bond_return: number;
+  };
+}
+
 export interface PredictionResponse {
   ticker: string;
   date: string;
@@ -64,6 +86,7 @@ export interface PredictionResponse {
   ml_features?: MLFeatures;
   ml_details?: MLDetails;
   top_features?: TopFeature[];
+  trend?: TrendAnalysis;
 }
 
 export interface BacktestPeriod {
@@ -95,12 +118,24 @@ export interface AllocationStats {
   bearish_days: number;
 }
 
+export interface BacktestHistory {
+  date: string;
+  allocation: number;
+  prediction: string;
+  actual: string;
+  correct: boolean;
+  strategy_value: number;
+  buyhold_value: number;
+  bond_value: number;
+}
+
 export interface BacktestResponse {
   period: BacktestPeriod;
   returns: BacktestReturns;
   metrics: BacktestMetrics;
   allocation_stats?: AllocationStats;
   final_capital?: number;
+  history?: BacktestHistory[];
 }
 
 export interface IndicatorsResponse {

@@ -408,8 +408,45 @@ class MonthlyMLPredictor:
                 "max_drawdown_pct": round(max_drawdown, 2),
                 "volatility_pct": round(volatility, 2)
             },
-            "final_capital": round(capital, 2)
+            "final_capital": round(capital, 2),
+            "history": self._format_history(results_df, df_clean)
         }
+    
+    def _format_history(self, results_df: pd.DataFrame, df_clean: pd.DataFrame) -> List[Dict]:
+        """Format backtest history for chart display."""
+        history = []
+        cumulative_strategy = 100
+        cumulative_buyhold = 100
+        cumulative_bond = 100
+        
+        start_idx = int(len(df_clean) * 0.7)
+        
+        for i, row in results_df.iterrows():
+            # Get actual date from df_clean
+            actual_idx = start_idx + len(history)
+            if actual_idx < len(df_clean) and "Date" in df_clean.columns:
+                date = df_clean["Date"].iloc[actual_idx]
+                date_str = date.strftime("%Y-%m") if hasattr(date, 'strftime') else str(date)[:7]
+            else:
+                date_str = f"M{len(history)+1}"
+            
+            # Calculate cumulative returns
+            cumulative_strategy *= (1 + row["portfolio_return"])
+            cumulative_buyhold *= (1 + row["actual_return"])
+            cumulative_bond *= 1.003  # ~3.6% annual
+            
+            history.append({
+                "date": date_str,
+                "allocation": int(row["allocation"] * 100),
+                "prediction": "ขึ้น" if row["prediction"] == 1 else "ลง",
+                "actual": "ขึ้น" if row["actual"] == 1 else "ลง",
+                "correct": bool(row["correct"]),
+                "strategy_value": round(cumulative_strategy, 2),
+                "buyhold_value": round(cumulative_buyhold, 2),
+                "bond_value": round(cumulative_bond, 2),
+            })
+        
+        return history
     
     def get_top_features(self, n: int = 5) -> List[Tuple[str, float]]:
         """Get top N most important features from the model."""
@@ -444,6 +481,95 @@ class MonthlyMLPredictor:
         }
         
         return display_features
+    
+    def get_trend_analysis(self, monthly: pd.DataFrame) -> Dict[str, Any]:
+        """
+        วิเคราะห์แนวโน้มและเปรียบเทียบ PEA-E vs PEA-F
+        """
+        df = self.create_features(monthly)
+        df_clean = df.dropna(subset=self.feature_columns)
+        
+        if len(df_clean) < 6:
+            return {}
+        
+        latest = df_clean.iloc[-1]
+        
+        # Current prediction
+        prediction, confidence, _ = self.predict(monthly)
+        
+        # Trend indicators
+        price_vs_sma3 = latest.get("Price_SMA3_Ratio", 1)
+        price_vs_sma6 = latest.get("Price_SMA6_Ratio", 1)
+        price_vs_sma12 = latest.get("Price_SMA12_Ratio", 1)
+        
+        # Momentum
+        return_1m = latest.get("Return_1m", 0) * 100
+        return_3m = latest.get("Return_3m", 0) * 100
+        return_6m = latest.get("Return_6m", 0) * 100
+        
+        # Trend strength (0-100)
+        trend_score = 0
+        if price_vs_sma3 > 1: trend_score += 20
+        if price_vs_sma6 > 1: trend_score += 25
+        if price_vs_sma12 > 1: trend_score += 25
+        if return_1m > 0: trend_score += 15
+        if return_3m > 0: trend_score += 15
+        
+        # Determine trend direction
+        if trend_score >= 70:
+            trend = "ขาขึ้นแข็งแกร่ง"
+            trend_icon = "📈"
+        elif trend_score >= 50:
+            trend = "ขาขึ้นอ่อน"
+            trend_icon = "↗️"
+        elif trend_score >= 30:
+            trend = "ไซด์เวย์"
+            trend_icon = "➡️"
+        elif trend_score >= 15:
+            trend = "ขาลงอ่อน"
+            trend_icon = "↘️"
+        else:
+            trend = "ขาลงแข็งแกร่ง"
+            trend_icon = "📉"
+        
+        # PEA-E vs PEA-F comparison
+        # Bond yield assumption: ~2.5% per year = 0.2% per month
+        bond_monthly_return = 0.2
+        
+        # Expected equity return based on prediction
+        if prediction == 1:
+            expected_equity = return_1m * 0.3 + 2.0 * confidence  # Rough estimate
+        else:
+            expected_equity = return_1m * 0.3 - 2.0 * confidence
+        
+        if expected_equity > bond_monthly_return:
+            recommendation = "PEA-E น่าสนใจกว่า"
+            rec_reason = f"คาดผลตอบแทนหุ้น ({expected_equity:.1f}%) > ตราสารหนี้ ({bond_monthly_return}%)"
+        else:
+            recommendation = "PEA-F ปลอดภัยกว่า"
+            rec_reason = f"ตราสารหนี้ ({bond_monthly_return}%) มั่นคงกว่าในช่วงนี้"
+        
+        return {
+            "trend": trend,
+            "trend_icon": trend_icon,
+            "trend_score": trend_score,
+            "momentum": {
+                "1m": round(return_1m, 2),
+                "3m": round(return_3m, 2),
+                "6m": round(return_6m, 2),
+            },
+            "price_position": {
+                "vs_sma3": "เหนือ" if price_vs_sma3 > 1 else "ใต้",
+                "vs_sma6": "เหนือ" if price_vs_sma6 > 1 else "ใต้",
+                "vs_sma12": "เหนือ" if price_vs_sma12 > 1 else "ใต้",
+            },
+            "comparison": {
+                "recommendation": recommendation,
+                "reason": rec_reason,
+                "expected_equity": round(expected_equity, 2),
+                "bond_return": bond_monthly_return,
+            }
+        }
 
 
 def create_monthly_data_for_ml(df: pd.DataFrame) -> pd.DataFrame:

@@ -71,21 +71,18 @@ def get_weather_and_action(prediction: int, confidence: float, allocation: int) 
 
 
 def calculate_allocation(prediction: int, confidence: float) -> int:
-    """Calculate recommended allocation based on prediction and confidence."""
+    """
+    Calculate recommended allocation based on prediction and confidence.
+    ใช้ confidence โดยตรงเพื่อให้สัดส่วนละเอียดขึ้น
+    """
     if prediction == 1:  # Bullish
-        if confidence >= 0.7:
-            return 100
-        elif confidence >= 0.6:
-            return 70
-        else:
-            return 50
+        # confidence 0.5-1.0 → allocation 50-100%
+        allocation = int(50 + (confidence - 0.5) * 100)
+        return min(100, max(50, allocation))
     else:  # Bearish
-        if confidence >= 0.7:
-            return 0
-        elif confidence >= 0.6:
-            return 30
-        else:
-            return 50
+        # confidence 0.5-1.0 → allocation 50-0%
+        allocation = int(50 - (confidence - 0.5) * 100)
+        return min(50, max(0, allocation))
 
 
 def run_daily_update():
@@ -137,6 +134,10 @@ def run_daily_update():
         ml_features = predictor.get_current_features(monthly_ml)
         top_features = predictor.get_top_features(5)
         
+        # Get trend analysis
+        print("\n📊 Analyzing trend...")
+        trend_analysis = predictor.get_trend_analysis(monthly_ml)
+        
         # Run ML backtest
         print("\n📊 Running ML backtest...")
         backtest_result = predictor.backtest(monthly_ml)
@@ -159,11 +160,13 @@ def run_daily_update():
                 "ml_details": ml_details,
                 "ml_features": ml_features,
                 "top_features": [{"name": name, "importance": round(imp, 4)} for name, imp in top_features],
+                "trend": trend_analysis,
             },
             "backtest": {
                 "period": backtest_result["period"],
                 "returns": backtest_result["returns"],
                 "metrics": backtest_result["metrics"],
+                "history": backtest_result.get("history", []),
             },
             "model_info": {
                 "type": "ML Ensemble (XGB + RF + GB)",
