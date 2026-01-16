@@ -1,42 +1,42 @@
 {
-  "updated_at": "2026-01-16 01:47:36",
-  "updated_timestamp": "2026-01-16T01:47:36.540259",
+  "updated_at": "2026-01-16 18:55:35",
+  "updated_timestamp": "2026-01-16T18:55:35.887775",
   "prediction": {
     "ticker": "TDEX.BK",
     "date": "2026-01",
     "prediction": "Bullish",
-    "probability": 0.5770169528198137,
-    "recommended_allocation": 57,
-    "allocation_reasoning": "สัญญาณกลางๆ แนะนำ PEA-E 57%",
-    "weather": "🌥️ มีเมฆ",
-    "action": "สัญญาณกลางๆ แนะนำ PEA-E 57%",
+    "probability": 0.6293783364896671,
+    "recommended_allocation": 62,
+    "allocation_reasoning": "สัญญาณค่อนข้างดี แนะนำ PEA-E 62%",
+    "weather": "⛅ ฟ้าครึ้ม",
+    "action": "สัญญาณค่อนข้างดี แนะนำ PEA-E 62%",
     "ml_details": {
       "individual_models": {
         "xgb": {
           "prediction": 1,
-          "confidence": 0.6226779818534851
+          "confidence": 0.7046772241592407
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.5559954108836074
+          "confidence": 0.556362283042693
         },
         "gb": {
           "prediction": 1,
-          "confidence": 0.6643682874895634
+          "confidence": 0.7398200683524537
         }
       },
       "ensemble_proba": {
-        "down": 0.4229830471801863,
-        "up": 0.5770169528198137
+        "down": 0.3706216635103328,
+        "up": 0.6293783364896671
       }
     },
     "ml_features": {
-      "Return_1m": 0.85,
-      "Return_3m": -0.71,
-      "RSI_6": 69.8,
-      "Price_SMA6_Ratio": 1.73,
-      "Volatility_3m": 2.52,
-      "Drawdown": -5.04
+      "Return_1m": 2.18,
+      "Return_3m": 0.6,
+      "RSI_6": 72.9,
+      "Price_SMA6_Ratio": 2.84,
+      "Volatility_3m": 2.89,
+      "Drawdown": -3.79
     },
     "top_features": [
       {
@@ -63,11 +63,11 @@
     "trend": {
       "trend": "ขาขึ้นแข็งแกร่ง",
       "trend_icon": "📈",
-      "trend_score": 85,
+      "trend_score": 100,
       "momentum": {
-        "1m": 0.85,
-        "3m": -0.71,
-        "6m": 4.77
+        "1m": 2.18,
+        "3m": 0.6,
+        "6m": 6.16
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -76,8 +76,8 @@
       },
       "comparison": {
         "recommendation": "PEA-E น่าสนใจกว่า",
-        "reason": "คาดผลตอบแทนหุ้น (1.4%) > ตราสารหนี้ (0.2%)",
-        "expected_equity": 1.41,
+        "reason": "คาดผลตอบแทนหุ้น (1.9%) > ตราสารหนี้ (0.2%)",
+        "expected_equity": 1.91,
         "bond_return": 0.2
       }
     }
@@ -89,17 +89,17 @@
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": 11.12,
-      "buy_hold_return_pct": -4.83,
-      "excess_return_pct": 15.95
+      "strategy_return_pct": 11.85,
+      "buy_hold_return_pct": -3.58,
+      "excess_return_pct": 15.43
     },
     "metrics": {
       "win_rate_pct": 71.4,
       "total_trades": 14,
       "correct_trades": 10,
-      "sharpe_ratio": 1.55,
+      "sharpe_ratio": 1.64,
       "max_drawdown_pct": -1.18,
-      "volatility_pct": 5.96
+      "volatility_pct": 5.97
     },
     "history": [
       {
@@ -238,8 +238,8 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 111.12,
-        "buyhold_value": 95.17,
+        "strategy_value": 111.85,
+        "buyhold_value": 96.42,
         "bond_value": 104.28
       }
     ]
