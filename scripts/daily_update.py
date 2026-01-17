@@ -13,9 +13,16 @@ Usage:
 
 import json
 import sys
+import io
 from datetime import datetime
 from pathlib import Path
 import numpy as np
+
+# Fix encoding for Windows console (esp. when run from Task Scheduler)
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+if sys.stderr.encoding != 'utf-8':
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -88,7 +95,7 @@ def calculate_allocation(prediction: int, confidence: float) -> int:
 def run_daily_update():
     """Run daily prediction update using ML Ensemble model"""
     print("=" * 50)
-    print(f"🚀 Daily Update (ML Ensemble) - {get_thai_time()}")
+    print(f"Daily Update (ML Ensemble) - {get_thai_time()}")
     print("=" * 50)
     
     # Ensure output directory exists
@@ -96,22 +103,22 @@ def run_daily_update():
     
     try:
         # Fetch data
-        print("\n📊 Fetching market data...")
+        print("\n[1/6] Fetching market data...")
         df = fetch_stock_data(ticker=settings.TICKER, period="5y")
         print(f"   Got {len(df)} days of data")
         
         # Create monthly data for ML
-        print("\n📅 Creating monthly data...")
+        print("\n[2/6] Creating monthly data...")
         monthly_ml = create_monthly_data_for_ml(df)
         print(f"   Got {len(monthly_ml)} months of data")
         
         # Initialize ML predictor
-        print("\n🤖 Initializing ML Ensemble...")
+        print("\n[3/6] Initializing ML Ensemble...")
         predictor = MonthlyMLPredictor()
         
         # Train if model doesn't exist
         if not predictor.is_trained():
-            print("\n🎯 Training ML model (first time)...")
+            print("\n   Training ML model (first time)...")
             train_result = predictor.train(monthly_ml)
             print(f"   Train accuracy: {train_result['train_accuracy']:.2%}")
             print(f"   Test accuracy: {train_result['test_accuracy']:.2%}")
@@ -122,7 +129,7 @@ def run_daily_update():
             print(f"   Model loaded (trained: {predictor.last_trained})")
         
         # Get ML prediction
-        print("\n🔮 Getting ML prediction...")
+        print("\n[4/6] Getting ML prediction...")
         ml_prediction, ml_confidence, ml_details = predictor.predict(monthly_ml)
         
         # Calculate allocation
@@ -130,16 +137,16 @@ def run_daily_update():
         weather, action = get_weather_and_action(ml_prediction, ml_confidence, allocation)
         
         # Get ML features for display
-        print("\n📈 Getting ML features...")
+        print("\n[5/6] Getting ML features...")
         ml_features = predictor.get_current_features(monthly_ml)
         top_features = predictor.get_top_features(5)
         
         # Get trend analysis
-        print("\n📊 Analyzing trend...")
+        print("   Analyzing trend...")
         trend_analysis = predictor.get_trend_analysis(monthly_ml)
         
         # Run ML backtest
-        print("\n📊 Running ML backtest...")
+        print("\n[6/6] Running ML backtest...")
         backtest_result = predictor.backtest(monthly_ml)
         
         # Prepare output
@@ -176,13 +183,13 @@ def run_daily_update():
         }
         
         # Save to JSON
-        print(f"\n💾 Saving to {OUTPUT_FILE}...")
+        print(f"\nSaving to {OUTPUT_FILE}...")
         output_data = convert_to_serializable(output_data)
         with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
             json.dump(output_data, f, ensure_ascii=False, indent=2)
         
         print("\n" + "=" * 50)
-        print("✅ Daily update completed!")
+        print("SUCCESS: Daily update completed!")
         print(f"   ML Prediction: {'Bullish' if ml_prediction == 1 else 'Bearish'} ({ml_confidence:.1%})")
         print(f"   Allocation: PEA-E {allocation}%")
         print(f"   Weather: {weather}")
@@ -192,7 +199,7 @@ def run_daily_update():
         return output_data
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\nERROR: {e}")
         import traceback
         traceback.print_exc()
         

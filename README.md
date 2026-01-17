@@ -1,121 +1,127 @@
 # 🧭 PEA Fund Navigator
 
-ระบบ AI นำทางสำหรับกองทุนสำรองเลี้ยงชีพ PEA - แนะนำสัดส่วน PEA-E (หุ้น) vs PEA-F (ตราสารหนี้)
+ระบบ AI แนะนำสัดส่วนกองทุน PEA-E (หุ้น) vs PEA-F (ตราสารหนี้)
 
-## 📊 Model
+**ML Ensemble Model** - Win Rate 71% | Return +10.98% | Sharpe 1.53
 
-**ML Ensemble** - รวม 3 โมเดล:
-- XGBoost
-- Random Forest  
-- Gradient Boosting
-
-ใช้ข้อมูลรายเดือนจาก TDEX.BK (SET50 ETF)
+---
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
-
+### 1. ติดตั้ง
 ```bash
-# Python dependencies
 pip install -r requirements.txt
-
-# Frontend dependencies
-cd frontend
-npm install
+cd frontend && npm install
 ```
 
-### 2. Run Daily Update
-
-```bash
-python scripts/daily_update.py
+### 2. รัน
+```cmd
+update.bat
 ```
 
-### 3. Run Frontend
+เลือก:
+- **1** = Test (ทดสอบ)
+- **2** = Update (อัพเดทข้อมูล)
+- **3** = Update + Push (อัพเดท + Push GitHub)
+- **4** = Setup Git (ครั้งแรก)
+- **5** = Setup Auto Run (รันอัตโนมัติ)
 
-```bash
-cd frontend
-npm run dev
+### 3. ตั้งรันอัตโนมัติ (แนะนำ)
+
+**วิธีที่ 1: ใช้ VBS Script (ง่ายที่สุด)**
+```cmd
+# ดับเบิลคลิก
+setup_auto_run_admin.vbs
 ```
 
-เปิด http://localhost:3000
+**วิธีที่ 2: ใช้ update.bat**
+```cmd
+# คลิกขวา update.bat → Run as administrator
+# เลือก 5
+```
+
+เลือก:
+- **1** = รันอัตโนมัติ (Update อย่างเดียว)
+- **2** = รันอัตโนมัติ + Push GitHub (แนะนำ!)
+- **3** = ปิด Auto Run
 
 ---
 
 ## 🌐 Deploy บน Vercel
 
-### วิธีตั้งค่า:
+1. Push ไป GitHub
+2. Import ที่ [vercel.com](https://vercel.com)
+3. ตั้งค่า:
+   - Framework: **Next.js**
+   - Root Directory: **frontend**
+4. Deploy!
 
-1. **Push โปรเจคขึ้น GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/DDME36/PEA-Fund-Navigator.git
-   git push -u origin main
-   ```
-
-2. **เชื่อม Vercel กับ GitHub**
-   - ไปที่ [vercel.com](https://vercel.com)
-   - Import repository `PEA-Fund-Navigator`
-   - ตั้งค่า:
-     - Framework: Next.js
-     - Root Directory: `frontend`
-   - Deploy!
-
-3. **ตั้งค่าอัพเดทอัตโนมัติ (บนคอมคุณ)**
-   ```
-   รัน: scripts/setup_startup_vercel.bat
-   ```
-   
-   ทุกครั้งที่เปิดคอม จะ:
-   - รัน `daily_update.py` อัพเดทข้อมูล
-   - Push ไป GitHub อัตโนมัติ
-   - Vercel จะ deploy ใหม่อัตโนมัติ
+**อัพเดทข้อมูลบน Vercel:**
+```cmd
+update.bat
+# เลือก 3 (Update + Push)
+```
 
 ---
 
-## 📁 Scripts
-
-| ไฟล์ | คำอธิบาย |
-|------|----------|
-| `scripts/daily_update.py` | อัพเดทข้อมูลและ prediction |
-| `scripts/auto_update.bat` | รันอัพเดท (local only) |
-| `scripts/update_and_push.bat` | รันอัพเดท + push GitHub |
-| `scripts/setup_startup_vercel.bat` | ตั้งค่ารันอัตโนมัติตอนเปิดคอม |
-| `scripts/remove_startup.bat` | ลบการรันอัตโนมัติ |
-
----
-
-## 📈 Performance (ML Backtest)
-
-- **Win Rate**: ~71%
-- **Return**: +10.98% (vs Buy&Hold -5.06%)
-- **Sharpe Ratio**: 1.53
-- **Max Drawdown**: -1.18%
-
----
-
-## 📁 Project Structure
+## 📁 โครงสร้าง
 
 ```
-├── app/                    # Backend (Python)
-│   ├── monthly_ml.py      # ML Ensemble model
-│   ├── data_fetcher.py    # ดึงข้อมูลราคา
-│   └── config.py          # ตั้งค่า
-│
-├── frontend/              # Frontend (Next.js)
-│   ├── app/page.tsx       # หน้าหลัก
-│   ├── public/data/       # JSON data
-│   └── lib/               # Types & API
-│
-├── scripts/               # Scripts
-│   ├── daily_update.py    # อัพเดทรายวัน
-│   └── *.bat              # Windows scripts
-│
-└── models/                # Saved ML models
-    ├── monthly_ml.joblib
-    └── monthly_scaler.joblib
+├── update.bat                    # ⭐ ไฟล์หลัก
+├── setup_auto_run_admin.vbs      # 🔧 ตั้งรันอัตโนมัติ (Run as Admin)
+├── setup_auto_run.bat            # 🔧 ตั้งรันอัตโนมัติ (Manual)
+├── scripts/
+│   └── daily_update.py          # Python script
+├── frontend/
+│   └── public/data/
+│       └── prediction.json      # Output
+└── logs/                        # Log files
 ```
+
+---
+
+## 🔧 การใช้งาน
+
+### ทดสอบ
+```cmd
+update.bat
+# เลือก 1
+```
+
+### อัพเดทข้อมูล (บนเครื่อง)
+```cmd
+update.bat
+# เลือก 2
+```
+
+### อัพเดท + Push GitHub (อัพเดท Vercel)
+```cmd
+update.bat
+# เลือก 3
+```
+
+### Setup Git (ครั้งแรก)
+```cmd
+update.bat
+# เลือก 4
+```
+
+### ตั้งรันอัตโนมัติ
+```cmd
+update.bat
+# เลือก 5
+```
+
+---
+
+## 📊 Model
+
+**ML Ensemble** (XGBoost + Random Forest + Gradient Boosting)
+
+- Win Rate: 71%
+- Return: +10.98% (vs Buy&Hold -5.06%)
+- Sharpe Ratio: 1.53
+- Max Drawdown: -1.18%
 
 ---
 
