@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-01-23 12:57:52",
-  "updated_timestamp": "2026-01-23T12:57:52.156982",
+  "updated_at": "2026-01-23 19:20:17",
+  "updated_timestamp": "2026-01-23T19:20:17.969177",
   "prediction": {
     "ticker": "TDEX.BK",
     "date": "2026-01",
     "prediction": "Bearish",
-    "probability": 0.8017579694630012,
-    "recommended_allocation": 19,
+    "probability": 0.7879145556363895,
+    "recommended_allocation": 21,
     "allocation_reasoning": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
     "weather": "🌧️ พายุเข้า",
     "action": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
@@ -14,29 +14,29 @@
       "individual_models": {
         "xgb": {
           "prediction": 0,
-          "confidence": 0.9001843333244324
+          "confidence": 0.9018664956092834
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.685670992476586
+          "confidence": 0.6655705096261033
         },
         "gb": {
           "prediction": 0,
-          "confidence": 0.8194185825879846
+          "confidence": 0.7963066616737817
         }
       },
       "ensemble_proba": {
-        "down": 0.8017579694630012,
-        "up": 0.19824202556994522
+        "down": 0.7879145556363895,
+        "up": 0.21208543939655677
       }
     },
     "ml_features": {
-      "Return_1m": 5.32,
-      "Return_3m": 3.69,
-      "RSI_6": 78.2,
-      "Price_SMA6_Ratio": 5.45,
-      "Volatility_3m": 4.22,
-      "Drawdown": -0.83
+      "Return_1m": 4.72,
+      "Return_3m": 3.1,
+      "RSI_6": 77.3,
+      "Price_SMA6_Ratio": 4.95,
+      "Volatility_3m": 3.93,
+      "Drawdown": -1.4
     },
     "top_features": [
       {
@@ -65,9 +65,9 @@
       "trend_icon": "📈",
       "trend_score": 100,
       "momentum": {
-        "1m": 5.32,
-        "3m": 3.69,
-        "6m": 9.42
+        "1m": 4.72,
+        "3m": 3.1,
+        "6m": 8.79
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -77,7 +77,7 @@
       "comparison": {
         "recommendation": "PEA-F ปลอดภัยกว่า",
         "reason": "ตราสารหนี้ (0.2%) มั่นคงกว่าในช่วงนี้",
-        "expected_equity": -0.01,
+        "expected_equity": -0.16,
         "bond_return": 0.2
       }
     }
@@ -89,17 +89,17 @@
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": 13.59,
-      "buy_hold_return_pct": -0.61,
-      "excess_return_pct": 14.2
+      "strategy_return_pct": 13.26,
+      "buy_hold_return_pct": -1.18,
+      "excess_return_pct": 14.44
     },
     "metrics": {
       "win_rate_pct": 71.4,
       "total_trades": 14,
       "correct_trades": 10,
-      "sharpe_ratio": 1.79,
+      "sharpe_ratio": 1.77,
       "max_drawdown_pct": -1.18,
-      "volatility_pct": 6.24
+      "volatility_pct": 6.16
     },
     "history": [
       {
@@ -238,8 +238,8 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 113.59,
-        "buyhold_value": 99.39,
+        "strategy_value": 113.26,
+        "buyhold_value": 98.82,
         "bond_value": 104.28
       }
     ]
