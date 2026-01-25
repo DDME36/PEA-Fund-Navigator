@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-01-25 16:54:49",
-  "updated_timestamp": "2026-01-25T16:54:49.225577",
+  "updated_at": "2026-01-25 19:22:11",
+  "updated_timestamp": "2026-01-25T19:22:11.591331",
   "prediction": {
     "ticker": "TDEX.BK",
     "date": "2026-01",
@@ -18,7 +18,7 @@
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.6655705096261033
+          "confidence": 0.6655705096261032
         },
         "gb": {
           "prediction": 0,
