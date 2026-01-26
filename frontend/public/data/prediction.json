@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-01-26 11:22:57",
-  "updated_timestamp": "2026-01-26T11:22:57.078250",
+  "updated_at": "2026-01-26 18:02:58",
+  "updated_timestamp": "2026-01-26T18:02:58.827521",
   "prediction": {
     "ticker": "TDEX.BK",
     "date": "2026-01",
     "prediction": "Bearish",
-    "probability": 0.7527685898328116,
-    "recommended_allocation": 24,
+    "probability": 0.7724842146330619,
+    "recommended_allocation": 22,
     "allocation_reasoning": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
     "weather": "🌧️ พายุเข้า",
     "action": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
@@ -18,25 +18,25 @@
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.6431083561767157
+          "confidence": 0.6748634389190326
         },
         "gb": {
           "prediction": 0,
-          "confidence": 0.7514779499733306
+          "confidence": 0.7788697416317647
         }
       },
       "ensemble_proba": {
-        "down": 0.7527685898328116,
-        "up": 0.24723141513424204
+        "down": 0.7724842146330619,
+        "up": 0.22751579033399172
       }
     },
     "ml_features": {
-      "Return_1m": 3.99,
-      "Return_3m": 2.38,
-      "RSI_6": 76.2,
-      "Price_SMA6_Ratio": 4.35,
-      "Volatility_3m": 3.6,
-      "Drawdown": -2.08
+      "Return_1m": 4.23,
+      "Return_3m": 2.62,
+      "RSI_6": 76.6,
+      "Price_SMA6_Ratio": 4.55,
+      "Volatility_3m": 3.71,
+      "Drawdown": -1.86
     },
     "top_features": [
       {
@@ -65,9 +65,9 @@
       "trend_icon": "📈",
       "trend_score": 100,
       "momentum": {
-        "1m": 3.99,
-        "3m": 2.38,
-        "6m": 8.04
+        "1m": 4.23,
+        "3m": 2.62,
+        "6m": 8.29
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -77,7 +77,7 @@
       "comparison": {
         "recommendation": "PEA-F ปลอดภัยกว่า",
         "reason": "ตราสารหนี้ (0.2%) มั่นคงกว่าในช่วงนี้",
-        "expected_equity": -0.31,
+        "expected_equity": -0.28,
         "bond_return": 0.2
       }
     }
@@ -89,17 +89,17 @@
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": 12.85,
-      "buy_hold_return_pct": -1.87,
-      "excess_return_pct": 14.72
+      "strategy_return_pct": 12.99,
+      "buy_hold_return_pct": -1.64,
+      "excess_return_pct": 14.63
     },
     "metrics": {
       "win_rate_pct": 71.4,
       "total_trades": 14,
       "correct_trades": 10,
-      "sharpe_ratio": 1.74,
+      "sharpe_ratio": 1.75,
       "max_drawdown_pct": -1.18,
-      "volatility_pct": 6.08
+      "volatility_pct": 6.11
     },
     "history": [
       {
@@ -238,8 +238,8 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 112.85,
-        "buyhold_value": 98.13,
+        "strategy_value": 112.99,
+        "buyhold_value": 98.36,
         "bond_value": 104.28
       }
     ]
