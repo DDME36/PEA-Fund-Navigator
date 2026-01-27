@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-01-27 11:19:33",
-  "updated_timestamp": "2026-01-27T11:19:33.194696",
+  "updated_at": "2026-01-27 19:18:54",
+  "updated_timestamp": "2026-01-27T19:18:54.755104",
   "prediction": {
     "ticker": "TDEX.BK",
     "date": "2026-01",
     "prediction": "Bearish",
-    "probability": 0.7993776917464549,
+    "probability": 0.7983540592046857,
     "recommended_allocation": 20,
     "allocation_reasoning": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
     "weather": "🌧️ พายุเข้า",
@@ -18,16 +18,16 @@
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.6668504968802285
+          "confidence": 0.6656004968802285
         },
         "gb": {
           "prediction": 0,
-          "confidence": 0.8310982450347036
+          "confidence": 0.8292773474093961
         }
       },
       "ensemble_proba": {
-        "down": 0.7993776917464549,
-        "up": 0.20062230328649142
+        "down": 0.7983540592046857,
+        "up": 0.20164593582826063
       }
     },
     "ml_features": {
