@@ -64,12 +64,27 @@ export interface TrendAnalysis {
   };
 }
 
+export interface MultiFundAllocation {
+  "PEA-F": number;
+  "PEA-E": number;
+  "PEA-G": number;
+  "PEA-P": number;
+}
+
+export interface MultiFundData {
+  default: MultiFundAllocation;
+  conservative: MultiFundAllocation;
+  moderate: MultiFundAllocation;
+  aggressive: MultiFundAllocation;
+  market_data: Record<string, any>;
+}
+
 export interface PredictionResponse {
   ticker: string;
   date: string;
   prediction: "Bullish" | "Bearish" | "Neutral";
   probability: number;
-  recommended_allocation: number;  // PEA-E %
+  recommended_allocation: number;  // PEA-E % (legacy)
   allocation_reasoning: string;
   weather: string;
   action: string;
@@ -87,6 +102,7 @@ export interface PredictionResponse {
   ml_details?: MLDetails;
   top_features?: TopFeature[];
   trend?: TrendAnalysis;
+  multi_fund?: MultiFundData;  // NEW: 4-fund allocations
 }
 
 export interface BacktestPeriod {

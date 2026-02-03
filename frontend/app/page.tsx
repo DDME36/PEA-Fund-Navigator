@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getDailyData, formatUpdatedAt, getDataAge, type DailyData } from "@/lib/api";
+import { MultiFundAllocation } from "@/components/multi-fund-allocation";
 
 function useCountUp(end: number, duration = 800) {
   const [count, setCount] = useState(end);
@@ -332,55 +333,76 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Allocation Circle */}
-        <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-in-up delay-300" aria-label="สัดส่วนการลงทุนที่แนะนำ">
-          {/* Mascot - left side on desktop */}
-          <div className="mascot hidden sm:block" title="PEA Navigator Mascot">
-            <img src="/mascot.png" alt="Mascot" />
-          </div>
-          
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 group" role="img" aria-label={`PEA-E ${peaE}% PEA-F ${peaF}%`}>
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="#27272a" strokeWidth="12" />
-              <circle 
-                cx="50" cy="50" r="40" fill="none" 
-                stroke="#22d3ee" strokeWidth="12"
-                strokeDasharray={`${animatedPeaE * 2.51} 251`}
-                strokeLinecap="round"
-                className="transition-all duration-700"
+        {/* Multi-Fund Allocation (4 กอง) */}
+        {prediction.multi_fund ? (
+          <section className="animate-fade-in-up delay-300">
+            <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800/50">
+              <h3 className="text-sm font-medium text-white mb-4 text-center flex items-center justify-center gap-2">
+                <span>📊</span>
+                <span>สัดส่วนแนะนำ 4 กอง</span>
+                <span className="text-xs text-zinc-500">(เลือกโหมดความเสี่ยง)</span>
+              </h3>
+              <MultiFundAllocation
+                conservative={prediction.multi_fund.conservative}
+                moderate={prediction.multi_fund.moderate}
+                aggressive={prediction.multi_fund.aggressive}
               />
-              <circle 
-                cx="50" cy="50" r="40" fill="none" 
-                stroke="#f472b6" strokeWidth="12"
-                strokeDasharray={`${animatedPeaF * 2.51} 251`}
-                strokeDashoffset={`${-animatedPeaE * 2.51}`}
-                strokeLinecap="round"
-                className="transition-all duration-700"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xs text-zinc-400">สัดส่วน</span>
+              <p className="text-[10px] text-zinc-500 text-center mt-4">
+                💡 ระบบใช้ EMA Smoothing เพื่อลดการสวิงของสัดส่วน
+              </p>
             </div>
-          </div>
-          
-          <div className="flex sm:flex-col gap-6 sm:gap-3 text-sm">
-            <div className="flex items-center gap-2 sm:hover:translate-x-1 transition-transform cursor-default">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" aria-hidden="true" />
-              <span className="text-zinc-200">PEA-E <span className="text-zinc-400 text-xs">(SET50)</span></span>
-              <span className="text-cyan-400 font-medium tabular-nums" aria-live="polite">{animatedPeaE}%</span>
+          </section>
+        ) : (
+          /* Legacy 2-Fund Allocation (fallback) */
+          <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 animate-fade-in-up delay-300" aria-label="สัดส่วนการลงทุนที่แนะนำ">
+            {/* Mascot - left side on desktop */}
+            <div className="mascot hidden sm:block" title="PEA Navigator Mascot">
+              <img src="/mascot.png" alt="Mascot" />
             </div>
-            <div className="flex items-center gap-2 sm:hover:translate-x-1 transition-transform cursor-default">
-              <span className="w-2 h-2 rounded-full bg-pink-400" aria-hidden="true" />
-              <span className="text-zinc-200">PEA-F <span className="text-zinc-400 text-xs">(Bond)</span></span>
-              <span className="text-pink-400 font-medium tabular-nums" aria-live="polite">{animatedPeaF}%</span>
+            
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 group" role="img" aria-label={`PEA-E ${peaE}% PEA-F ${peaF}%`}>
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#27272a" strokeWidth="12" />
+                <circle 
+                  cx="50" cy="50" r="40" fill="none" 
+                  stroke="#22d3ee" strokeWidth="12"
+                  strokeDasharray={`${animatedPeaE * 2.51} 251`}
+                  strokeLinecap="round"
+                  className="transition-all duration-700"
+                />
+                <circle 
+                  cx="50" cy="50" r="40" fill="none" 
+                  stroke="#f472b6" strokeWidth="12"
+                  strokeDasharray={`${animatedPeaF * 2.51} 251`}
+                  strokeDashoffset={`${-animatedPeaE * 2.51}`}
+                  strokeLinecap="round"
+                  className="transition-all duration-700"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-xs text-zinc-400">สัดส่วน</span>
+              </div>
             </div>
-          </div>
-          
-          {/* Mascot - below on mobile */}
-          <div className="mascot sm:hidden mt-2" title="PEA Navigator Mascot">
-            <img src="/mascot.png" alt="Mascot" />
-          </div>
-        </section>
+            
+            <div className="flex sm:flex-col gap-6 sm:gap-3 text-sm">
+              <div className="flex items-center gap-2 sm:hover:translate-x-1 transition-transform cursor-default">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" aria-hidden="true" />
+                <span className="text-zinc-200">PEA-E <span className="text-zinc-400 text-xs">(SET50)</span></span>
+                <span className="text-cyan-400 font-medium tabular-nums" aria-live="polite">{animatedPeaE}%</span>
+              </div>
+              <div className="flex items-center gap-2 sm:hover:translate-x-1 transition-transform cursor-default">
+                <span className="w-2 h-2 rounded-full bg-pink-400" aria-hidden="true" />
+                <span className="text-zinc-200">PEA-F <span className="text-zinc-400 text-xs">(Bond)</span></span>
+                <span className="text-pink-400 font-medium tabular-nums" aria-live="polite">{animatedPeaF}%</span>
+              </div>
+            </div>
+            
+            {/* Mascot - below on mobile */}
+            <div className="mascot sm:hidden mt-2" title="PEA Navigator Mascot">
+              <img src="/mascot.png" alt="Mascot" />
+            </div>
+          </section>
+        )}
 
         {/* Backtest Stats - Always visible */}
         {backtest && (

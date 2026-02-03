@@ -29,6 +29,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from app.data_fetcher import fetch_stock_data
 from app.monthly_ml import MonthlyMLPredictor, create_monthly_data_for_ml
+from app.improved_predictor import ImprovedPredictor, get_improved_prediction
+from app.multi_fund_predictor import MultiFundPredictor
 from app.config import settings
 
 # Output paths
@@ -93,18 +95,18 @@ def calculate_allocation(prediction: int, confidence: float) -> int:
 
 
 def run_daily_update():
-    """Run daily prediction update using ML Ensemble model"""
+    """Run daily prediction update using ML Ensemble + Multi-Fund model"""
     print("=" * 50)
-    print(f"Daily Update (ML Ensemble) - {get_thai_time()}")
+    print(f"Daily Update (Multi-Fund + ML) - {get_thai_time()}")
     print("=" * 50)
     
     # Ensure output directory exists
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     
     try:
-        # Fetch data
-        print("\n[1/6] Fetching market data...")
-        df = fetch_stock_data(ticker=settings.TICKER, period="5y")
+        # Fetch data for ML (SET Index)
+        print("\n[1/7] Fetching SET Index data for ML...")
+        df = fetch_stock_data(ticker=settings.TICKER_SET, period="5y")
         print(f"   Got {len(df)} days of data")
         
         # Create monthly data for ML
@@ -113,8 +115,8 @@ def run_daily_update():
         print(f"   Got {len(monthly_ml)} months of data")
         
         # Initialize ML predictor
-        print("\n[3/6] Initializing ML Ensemble...")
-        predictor = MonthlyMLPredictor()
+        print("\n[3/7] Initializing Improved ML Predictor...")
+        predictor = ImprovedPredictor()
         
         # Train if model doesn't exist
         if not predictor.is_trained():
@@ -128,16 +130,25 @@ def run_daily_update():
         else:
             print(f"   Model loaded (trained: {predictor.last_trained})")
         
-        # Get ML prediction
-        print("\n[4/6] Getting ML prediction...")
-        ml_prediction, ml_confidence, ml_details = predictor.predict(monthly_ml)
+        # Get IMPROVED prediction with trend adjustment
+        print("\n[4/7] Getting improved ML prediction...")
+        ml_prediction, ml_confidence, ml_details = predictor.predict_with_trend_adjustment(monthly_ml)
+        
+        # Show adjustment info
+        if "adjustment" in ml_details:
+            adj = ml_details["adjustment"]
+            print(f"   Base: {adj['base_prediction']} ({adj['base_confidence']:.1%})")
+            print(f"   Signals: Bullish={adj['bullish_signals']}, Bearish={adj['bearish_signals']}")
+            print(f"   Final: {adj['adjusted_prediction']} ({adj['adjusted_confidence']:.1%})")
+            if adj['changed']:
+                print(f"   ⚠️ Prediction CHANGED by trend adjustment!")
         
         # Calculate allocation
         allocation = calculate_allocation(ml_prediction, ml_confidence)
         weather, action = get_weather_and_action(ml_prediction, ml_confidence, allocation)
         
         # Get ML features for display
-        print("\n[5/6] Getting ML features...")
+        print("\n[5/7] Getting ML features...")
         ml_features = predictor.get_current_features(monthly_ml)
         top_features = predictor.get_top_features(5)
         
@@ -145,8 +156,24 @@ def run_daily_update():
         print("   Analyzing trend...")
         trend_analysis = predictor.get_trend_analysis(monthly_ml)
         
+        # Get improved recommendation
+        recommendation = predictor.get_recommendation_text(ml_prediction, ml_confidence, trend_analysis)
+        
+        # Multi-Fund Prediction
+        print("\n[6/7] Predicting 4-fund allocation...")
+        multi_fund = MultiFundPredictor()
+        all_profiles = multi_fund.get_all_risk_profiles()
+        
+        # Use moderate profile as default
+        default_allocation = all_profiles["moderate"]["allocation"]
+        market_data_4funds = all_profiles["moderate"]["market_data"]
+        
+        print(f"   Conservative: {all_profiles['conservative']['allocation']}")
+        print(f"   Moderate: {all_profiles['moderate']['allocation']}")
+        print(f"   Aggressive: {all_profiles['aggressive']['allocation']}")
+        
         # Run ML backtest
-        print("\n[6/6] Running ML backtest...")
+        print("\n[7/7] Running ML backtest...")
         backtest_result = predictor.backtest(monthly_ml)
         
         # Prepare output
@@ -156,7 +183,7 @@ def run_daily_update():
             "updated_at": get_thai_time(),
             "updated_timestamp": datetime.now().isoformat(),
             "prediction": {
-                "ticker": settings.TICKER,
+                "ticker": settings.TICKER_SET,
                 "date": latest_date,
                 "prediction": "Bullish" if ml_prediction == 1 else "Bearish",
                 "probability": ml_confidence,
@@ -168,6 +195,15 @@ def run_daily_update():
                 "ml_features": ml_features,
                 "top_features": [{"name": name, "importance": round(imp, 4)} for name, imp in top_features],
                 "trend": trend_analysis,
+                "improved_recommendation": recommendation,  # NEW: Better recommendation
+                # NEW: 4-fund allocations
+                "multi_fund": {
+                    "default": default_allocation,
+                    "conservative": all_profiles["conservative"]["allocation"],
+                    "moderate": all_profiles["moderate"]["allocation"],
+                    "aggressive": all_profiles["aggressive"]["allocation"],
+                    "market_data": market_data_4funds,
+                }
             },
             "backtest": {
                 "period": backtest_result["period"],
@@ -176,9 +212,15 @@ def run_daily_update():
                 "history": backtest_result.get("history", []),
             },
             "model_info": {
-                "type": "ML Ensemble (XGB + RF + GB)",
-                "ticker": settings.TICKER,
+                "type": "Improved Multi-Fund + ML Ensemble",
+                "ticker": settings.TICKER_SET,
                 "last_trained": predictor.last_trained,
+                "improvements": [
+                    "Trend-Aware Adjustment",
+                    "Momentum Boost",
+                    "Anti-Bearish Bias",
+                    "Signal-Based Calibration"
+                ]
             }
         }
         
@@ -191,7 +233,9 @@ def run_daily_update():
         print("\n" + "=" * 50)
         print("SUCCESS: Daily update completed!")
         print(f"   ML Prediction: {'Bullish' if ml_prediction == 1 else 'Bearish'} ({ml_confidence:.1%})")
-        print(f"   Allocation: PEA-E {allocation}%")
+        print(f"   4-Fund Allocation (Moderate):")
+        for fund, pct in default_allocation.items():
+            print(f"      {fund}: {pct}%")
         print(f"   Weather: {weather}")
         print(f"   Updated at: {get_thai_time()}")
         print("=" * 50)

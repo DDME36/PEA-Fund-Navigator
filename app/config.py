@@ -4,8 +4,20 @@ from dataclasses import dataclass
 
 @dataclass
 class Settings:
-    TICKER: str = "TDEX.BK"
+    # Main tickers for 4 funds
+    TICKER_SET: str = "^SET.BK"  # PEA-E (Thai Equity)
+    TICKER_SP500: str = "^GSPC"  # PEA-G (Global Equity)
+    TICKER_REITS: list = None  # PEA-P (Property/REITs)
+    
+    # Legacy ticker (for backward compatibility)
+    TICKER: str = "^SET.BK"
     TIMEZONE: str = "Asia/Bangkok"
+    
+    # Smoothing factor for allocation (0-1, higher = more stable)
+    ALLOCATION_SMOOTHING: float = 0.7  # 70% old, 30% new
+    
+    # Risk profiles
+    RISK_PROFILES: dict = None
     
     # Features optimized for Thai sideways market
     FEATURE_COLUMNS: tuple = (
@@ -54,6 +66,43 @@ class Settings:
     RANDOM_STATE: int = 42
 
 settings = Settings()
+
+# Initialize REITs list
+settings.TICKER_REITS = ["LPF.BK", "WHART.BK", "FTREIT.BK"]
+
+# Risk profiles (allocation ranges for each fund)
+settings.RISK_PROFILES = {
+    "conservative": {
+        "name": "ปลอดภัย",
+        "description": "เน้นความมั่นคง รักษาเงินต้น",
+        "ranges": {
+            "PEA-F": (40, 60),  # Bond 40-60%
+            "PEA-E": (0, 20),   # Thai Equity 0-20%
+            "PEA-G": (0, 20),   # Global Equity 0-20%
+            "PEA-P": (20, 40),  # REITs 20-40%
+        }
+    },
+    "moderate": {
+        "name": "ปกติ",
+        "description": "สมดุลระหว่างความเสี่ยงและผลตอบแทน",
+        "ranges": {
+            "PEA-F": (20, 40),  # Bond 20-40%
+            "PEA-E": (20, 40),  # Thai Equity 20-40%
+            "PEA-G": (20, 40),  # Global Equity 20-40%
+            "PEA-P": (10, 20),  # REITs 10-20%
+        }
+    },
+    "aggressive": {
+        "name": "ดุดัน",
+        "description": "เน้นผลตอบแทนสูง ยอมรับความเสี่ยง",
+        "ranges": {
+            "PEA-F": (0, 20),   # Bond 0-20%
+            "PEA-E": (30, 50),  # Thai Equity 30-50%
+            "PEA-G": (30, 50),  # Global Equity 30-50%
+            "PEA-P": (0, 20),   # REITs 0-20%
+        }
+    }
+}
 
 # Legacy exports
 TICKER = settings.TICKER
