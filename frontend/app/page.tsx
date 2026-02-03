@@ -371,7 +371,32 @@ export default function Dashboard() {
                 moderate={prediction.multi_fund.moderate}
                 aggressive={prediction.multi_fund.aggressive}
               />
-              <div className="mt-4 p-2 rounded-lg bg-zinc-800/30 border border-zinc-700/30">
+              
+              {/* Market Data for 4 Funds */}
+              {prediction.multi_fund.market_data && (
+                <div className="mt-4 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/30">
+                  <p className="text-[10px] text-zinc-400 mb-2">📈 ผลตอบแทนล่าสุด (ข้อมูลจริง)</p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px]">
+                    {Object.entries(prediction.multi_fund.market_data).map(([fund, data]: [string, any]) => {
+                      const return3m = data.return_3m || 0;
+                      const isPositive = return3m >= 0;
+                      return (
+                        <div key={fund} className="flex items-center justify-between p-2 rounded bg-zinc-900/50">
+                          <span className="text-zinc-300">{fund}</span>
+                          <span className={`font-medium ${isPositive ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {return3m > 0 ? '+' : ''}{return3m.toFixed(1)}%
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="text-[9px] text-zinc-500 mt-2 text-center">
+                    ผลตอบแทน 3 เดือนย้อนหลัง
+                  </p>
+                </div>
+              )}
+              
+              <div className="mt-3 p-2 rounded-lg bg-zinc-800/30 border border-zinc-700/30">
                 <p className="text-[10px] text-zinc-400 text-center">
                   💡 ระบบใช้ EMA Smoothing เพื่อลดการสวิงของสัดส่วน
                 </p>
@@ -435,9 +460,14 @@ export default function Dashboard() {
           <section className="pt-5 sm:pt-6 border-t border-zinc-800/50 animate-fade-in-up delay-400" aria-label="ผลการทดสอบย้อนหลัง">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs text-zinc-300 font-medium">📈 ผลทดสอบย้อนหลัง</p>
-              <span className="text-[10px] text-zinc-500">
-                {backtest.period?.months || backtest.history?.length || 0} เดือน
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-zinc-500">
+                  {backtest.period?.months || backtest.history?.length || 0} เดือน
+                </span>
+                <span className="text-[9px] px-2 py-0.5 rounded bg-zinc-800/50 text-zinc-400">
+                  2 กอง (Legacy)
+                </span>
+              </div>
             </div>
             
             {/* Warning if performance is bad */}
@@ -445,7 +475,7 @@ export default function Dashboard() {
               <div className="mb-3 p-2 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="text-[10px] text-red-400 flex items-center gap-1">
                   <span>⚠️</span>
-                  <span>ผลตอบแทนติดลบ - ระบบกำลังปรับปรุง</span>
+                  <span>ผลตอบแทนติดลบ - ระบบกำลังปรับปรุงด้วย Risk Management</span>
                 </p>
               </div>
             )}
