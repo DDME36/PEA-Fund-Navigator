@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-02-03 22:06:59",
-  "updated_timestamp": "2026-02-03T22:06:59.613067",
+  "updated_at": "2026-02-03 22:51:01",
+  "updated_timestamp": "2026-02-03T22:51:01.414367",
   "prediction": {
     "ticker": "^SET.BK",
     "date": "2026-02",
@@ -105,28 +105,28 @@
     },
     "multi_fund": {
       "default": {
-        "PEA-F": 20,
+        "PEA-F": 18,
         "PEA-E": 31,
-        "PEA-G": 31,
+        "PEA-G": 33,
         "PEA-P": 18
       },
       "conservative": {
-        "PEA-F": 25,
+        "PEA-F": 23,
         "PEA-E": 26,
-        "PEA-G": 26,
+        "PEA-G": 28,
         "PEA-P": 23
       },
       "moderate": {
-        "PEA-F": 20,
+        "PEA-F": 18,
         "PEA-E": 31,
-        "PEA-G": 31,
+        "PEA-G": 33,
         "PEA-P": 18
       },
       "aggressive": {
-        "PEA-F": 14,
-        "PEA-E": 33,
-        "PEA-G": 35,
-        "PEA-P": 18
+        "PEA-F": 13,
+        "PEA-E": 34,
+        "PEA-G": 36,
+        "PEA-P": 17
       },
       "market_data": {
         "PEA-E": {
@@ -137,16 +137,16 @@
           "trend": 0.5
         },
         "PEA-G": {
-          "return_1m": 0.6350298732303195,
-          "return_3m": 1.3705498568179486,
-          "return_6m": 10.266239745453376,
-          "volatility": 11.44350257162037,
+          "return_1m": 0.7612237023676416,
+          "return_3m": 1.4976660097549832,
+          "return_6m": 10.404510872670025,
+          "volatility": 11.425595159161176,
           "trend": 0.5
         },
         "PEA-P": {
           "return_1m": -2.301516680767627,
           "return_3m": 10.370799893202479,
-          "return_6m": 21.12059244507792,
+          "return_6m": 21.12059578884674,
           "volatility": 8,
           "trend": 3.45693329773416
         },
