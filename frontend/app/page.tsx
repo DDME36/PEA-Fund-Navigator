@@ -333,23 +333,49 @@ export default function Dashboard() {
           </section>
         )}
 
+        {/* Risk Management Alert */}
+        {prediction.risk_management && (
+          <section className="animate-fade-in-up delay-250">
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30">
+              <div className="flex items-start gap-2">
+                <span className="text-lg">🛡️</span>
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-blue-400 mb-1">Risk Management Active</p>
+                  <p className="text-[10px] text-zinc-300">{prediction.risk_management.reason}</p>
+                  <div className="flex gap-2 mt-2 text-[9px] text-zinc-400">
+                    <span>Vol: {prediction.risk_management.volatility?.toFixed(1)}%</span>
+                    <span>•</span>
+                    <span>DD: {prediction.risk_management.drawdown?.toFixed(1)}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Multi-Fund Allocation (4 กอง) */}
         {prediction.multi_fund ? (
           <section className="animate-fade-in-up delay-300">
             <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800/50">
-              <h3 className="text-sm font-medium text-white mb-4 text-center flex items-center justify-center gap-2">
-                <span>📊</span>
-                <span>สัดส่วนแนะนำ 4 กอง</span>
-                <span className="text-xs text-zinc-500">(เลือกโหมดความเสี่ยง)</span>
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-medium text-white flex items-center gap-2">
+                  <span>📊</span>
+                  <span>สัดส่วนแนะนำ 4 กอง</span>
+                </h3>
+                <span className="text-[10px] text-zinc-500 bg-zinc-800/50 px-2 py-1 rounded">
+                  เลือกโหมดด้านล่าง
+                </span>
+              </div>
               <MultiFundAllocation
                 conservative={prediction.multi_fund.conservative}
                 moderate={prediction.multi_fund.moderate}
                 aggressive={prediction.multi_fund.aggressive}
               />
-              <p className="text-[10px] text-zinc-500 text-center mt-4">
-                💡 ระบบใช้ EMA Smoothing เพื่อลดการสวิงของสัดส่วน
-              </p>
+              <div className="mt-4 p-2 rounded-lg bg-zinc-800/30 border border-zinc-700/30">
+                <p className="text-[10px] text-zinc-400 text-center">
+                  💡 ระบบใช้ EMA Smoothing เพื่อลดการสวิงของสัดส่วน
+                </p>
+              </div>
             </div>
           </section>
         ) : (
@@ -404,33 +430,56 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Backtest Stats - Always visible */}
+        {/* Backtest Stats - Improved */}
         {backtest && (
           <section className="pt-5 sm:pt-6 border-t border-zinc-800/50 animate-fade-in-up delay-400" aria-label="ผลการทดสอบย้อนหลัง">
-            <p className="text-[11px] sm:text-xs text-zinc-300 mb-3 sm:mb-4">ผลทดสอบย้อนหลัง (ML Model)</p>
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-              <div className="p-2 sm:p-3 rounded-xl hover:bg-zinc-800/30 transition-colors cursor-default focus-ring" tabIndex={0}>
-                <div className="text-base sm:text-lg font-medium tabular-nums">{animatedWinRate}%</div>
-                <div className="text-[10px] sm:text-xs text-zinc-300">อัตราชนะ</div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs text-zinc-300 font-medium">📈 ผลทดสอบย้อนหลัง</p>
+              <span className="text-[10px] text-zinc-500">
+                {backtest.period?.months || backtest.history?.length || 0} เดือน
+              </span>
+            </div>
+            
+            {/* Warning if performance is bad */}
+            {backtest.returns?.strategy_return_pct < 0 && (
+              <div className="mb-3 p-2 rounded-lg bg-red-500/10 border border-red-500/30">
+                <p className="text-[10px] text-red-400 flex items-center gap-1">
+                  <span>⚠️</span>
+                  <span>ผลตอบแทนติดลบ - ระบบกำลังปรับปรุง</span>
+                </p>
               </div>
-              <div className="p-2 sm:p-3 rounded-xl hover:bg-zinc-800/30 transition-colors cursor-default focus-ring" tabIndex={0}>
+            )}
+            
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center mb-4">
+              <div className="p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
+                <div className="text-base sm:text-lg font-medium tabular-nums">{animatedWinRate}%</div>
+                <div className="text-[10px] text-zinc-400">อัตราชนะ</div>
+              </div>
+              <div className="p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
                 <div className={`text-base sm:text-lg font-medium tabular-nums ${backtest.returns?.strategy_return_pct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                   {backtest.returns?.strategy_return_pct > 0 ? "+" : ""}{backtest.returns?.strategy_return_pct}%
                 </div>
-                <div className="text-[10px] sm:text-xs text-zinc-300">ผลตอบแทน</div>
+                <div className="text-[10px] text-zinc-400">ผลตอบแทน</div>
               </div>
-              <div className="p-2 sm:p-3 rounded-xl hover:bg-zinc-800/30 transition-colors cursor-default focus-ring" tabIndex={0}>
-                <div className="text-base sm:text-lg font-medium tabular-nums">{backtest.metrics?.sharpe_ratio}</div>
-                <div className="text-[10px] sm:text-xs text-zinc-300">ค่า Sharpe</div>
+              <div className="p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
+                <div className={`text-base sm:text-lg font-medium tabular-nums ${backtest.metrics?.sharpe_ratio >= 0 ? "text-white" : "text-red-400"}`}>
+                  {backtest.metrics?.sharpe_ratio}
+                </div>
+                <div className="text-[10px] text-zinc-400">Sharpe Ratio</div>
               </div>
             </div>
             
             {/* Performance Chart */}
             {backtest.history && backtest.history.length > 0 && (
-              <div className="mt-4 p-3 rounded-xl bg-zinc-900/50">
-                <p className="text-[10px] sm:text-xs text-zinc-400 mb-3">
-                  เปรียบเทียบผลตอบแทน {backtest.history.length} เดือน ({backtest.history[0]?.date} ถึง {backtest.history[backtest.history.length - 1]?.date})
-                </p>
+              <div className="p-3 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] text-zinc-400">
+                    📊 เปรียบเทียบผลตอบแทน
+                  </p>
+                  <p className="text-[9px] text-zinc-500">
+                    {backtest.history[0]?.date} - {backtest.history[backtest.history.length - 1]?.date}
+                  </p>
+                </div>
                 
                 {/* Simple Line Chart */}
                 <div className="relative h-32 sm:h-40 pr-14">
@@ -492,18 +541,18 @@ export default function Dashboard() {
                 </div>
                 
                 {/* Legend */}
-                <div className="flex justify-center gap-4 mt-2 text-[10px]">
-                  <span className="flex items-center gap-1">
+                <div className="flex justify-center gap-3 mt-3 text-[9px]">
+                  <span className="flex items-center gap-1.5 px-2 py-1 rounded bg-zinc-800/50">
                     <span className="w-3 h-0.5 bg-cyan-400"></span>
                     <span className="text-zinc-300">AI Strategy</span>
                   </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-0.5 bg-orange-400" style={{borderStyle: 'dashed'}}></span>
-                    <span className="text-zinc-300">PEA-E 100%</span>
+                  <span className="flex items-center gap-1.5 px-2 py-1 rounded bg-zinc-800/50">
+                    <span className="w-3 h-0.5 bg-orange-400"></span>
+                    <span className="text-zinc-300">100% หุ้น</span>
                   </span>
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1.5 px-2 py-1 rounded bg-zinc-800/50">
                     <span className="w-3 h-0.5 bg-pink-400"></span>
-                    <span className="text-zinc-300">PEA-F 100%</span>
+                    <span className="text-zinc-300">100% Bond</span>
                   </span>
                 </div>
               </div>
@@ -511,8 +560,8 @@ export default function Dashboard() {
             
             {/* Allocation History */}
             {backtest.history && backtest.history.length > 0 && (
-              <div className="mt-3 p-3 rounded-xl bg-zinc-900/50">
-                <p className="text-[10px] sm:text-xs text-zinc-400 mb-2">สัดส่วน PEA-E ที่แนะนำแต่ละเดือน</p>
+              <div className="mt-3 p-3 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
+                <p className="text-[10px] text-zinc-400 mb-2">📊 สัดส่วนหุ้นที่แนะนำแต่ละเดือน</p>
                 <div className="flex gap-1 overflow-x-auto pb-1">
                   {backtest.history.map((h, i) => (
                     <div key={i} className="flex flex-col items-center min-w-[28px]">
@@ -526,12 +575,14 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-center gap-3 mt-2 text-[9px] text-zinc-400">
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-sm bg-cyan-500/60"></span> ทายถูก
+                <div className="flex justify-center gap-2 mt-2 text-[9px]">
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-800/50">
+                    <span className="w-2 h-2 rounded-sm bg-cyan-500/60"></span>
+                    <span className="text-zinc-400">ทายถูก</span>
                   </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-sm bg-pink-500/60"></span> ทายผิด
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-800/50">
+                    <span className="w-2 h-2 rounded-sm bg-pink-500/60"></span>
+                    <span className="text-zinc-400">ทายผิด</span>
                   </span>
                 </div>
               </div>
@@ -539,17 +590,37 @@ export default function Dashboard() {
           </section>
         )}
 
+        {/* Model Info Banner */}
+        <section className="animate-fade-in-up delay-450">
+          <div className="p-3 rounded-xl bg-gradient-to-r from-zinc-900/50 to-zinc-800/50 border border-zinc-700/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-sm">🤖</span>
+                <div>
+                  <p className="text-[10px] font-medium text-white">Improved Multi-Fund + ML Ensemble</p>
+                  <p className="text-[9px] text-zinc-400">XGBoost + Random Forest + Gradient Boosting</p>
+                </div>
+              </div>
+              {prediction.risk_management && (
+                <span className="text-[9px] px-2 py-1 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                  Risk Managed
+                </span>
+              )}
+            </div>
+          </div>
+        </section>
+
         {/* Collapsible Details Section */}
         {prediction.ml_features && (
-          <section className="pt-5 sm:pt-6 border-t border-zinc-800/50 animate-fade-in-up delay-500">
+          <section className="pt-4 border-t border-zinc-800/50 animate-fade-in-up delay-500">
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="w-full flex items-center justify-between text-[11px] sm:text-xs text-zinc-300 py-2 hover:text-white transition-colors group"
+              className="w-full flex items-center justify-between text-xs text-zinc-300 py-2 px-3 rounded-lg hover:bg-zinc-800/30 transition-colors group"
               aria-expanded={showDetails}
             >
               <span className="flex items-center gap-2">
                 <span className={`w-1.5 h-1.5 rounded-full transition-colors ${showDetails ? 'bg-cyan-400' : 'bg-zinc-600'}`} />
-                รายละเอียดเพิ่มเติม
+                <span>รายละเอียดเทคนิค</span>
               </span>
               <svg 
                 className={`w-4 h-4 chevron-rotate ${showDetails ? 'open' : ''}`} 

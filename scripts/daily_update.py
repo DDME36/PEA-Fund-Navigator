@@ -31,6 +31,7 @@ from app.data_fetcher import fetch_stock_data
 from app.monthly_ml import MonthlyMLPredictor, create_monthly_data_for_ml
 from app.improved_predictor import ImprovedPredictor, get_improved_prediction
 from app.multi_fund_predictor import MultiFundPredictor
+from app.risk_management import apply_risk_management
 from app.config import settings
 
 # Output paths
@@ -156,6 +157,15 @@ def run_daily_update():
         print("   Analyzing trend...")
         trend_analysis = predictor.get_trend_analysis(monthly_ml)
         
+        # Apply Risk Management
+        print("   Applying risk management...")
+        risk_result = apply_risk_management(ml_prediction, ml_confidence, ml_features, trend_analysis)
+        allocation = risk_result["allocation"]
+        risk_reason = risk_result["reason"]
+        
+        print(f"   Risk-adjusted allocation: {allocation}% (was {int(ml_confidence*100)}%)")
+        print(f"   Reason: {risk_reason}")
+        
         # Get improved recommendation
         recommendation = predictor.get_recommendation_text(ml_prediction, ml_confidence, trend_analysis)
         
@@ -195,7 +205,8 @@ def run_daily_update():
                 "ml_features": ml_features,
                 "top_features": [{"name": name, "importance": round(imp, 4)} for name, imp in top_features],
                 "trend": trend_analysis,
-                "improved_recommendation": recommendation,  # NEW: Better recommendation
+                "improved_recommendation": recommendation,
+                "risk_management": risk_result,  # NEW: Risk management details
                 # NEW: 4-fund allocations
                 "multi_fund": {
                     "default": default_allocation,

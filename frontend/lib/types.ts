@@ -79,6 +79,17 @@ export interface MultiFundData {
   market_data: Record<string, any>;
 }
 
+export interface RiskManagementResult {
+  allocation: number;
+  allocation_decimal: number;
+  reason: string;
+  risk_adjusted: boolean;
+  original_confidence: number;
+  volatility: number;
+  drawdown: number;
+  trend_score: number;
+}
+
 export interface PredictionResponse {
   ticker: string;
   date: string;
@@ -102,7 +113,9 @@ export interface PredictionResponse {
   ml_details?: MLDetails;
   top_features?: TopFeature[];
   trend?: TrendAnalysis;
-  multi_fund?: MultiFundData;  // NEW: 4-fund allocations
+  multi_fund?: MultiFundData;  // 4-fund allocations
+  improved_recommendation?: string;  // NEW
+  risk_management?: RiskManagementResult;  // NEW
 }
 
 export interface BacktestPeriod {

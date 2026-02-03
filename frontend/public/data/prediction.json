@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-02-03 21:30:28",
-  "updated_timestamp": "2026-02-03T21:30:28.507541",
+  "updated_at": "2026-02-03 22:06:59",
+  "updated_timestamp": "2026-02-03T22:06:59.613067",
   "prediction": {
     "ticker": "^SET.BK",
     "date": "2026-02",
     "prediction": "Bullish",
     "probability": 0.7364976476994545,
-    "recommended_allocation": 73,
+    "recommended_allocation": 77,
     "allocation_reasoning": "สัญญาณดีมาก! แนะนำ PEA-E 73%",
     "weather": "☀️ ฟ้าเปิด",
     "action": "สัญญาณดีมาก! แนะนำ PEA-E 73%",
@@ -18,7 +18,7 @@
         },
         "rf": {
           "prediction": 1,
-          "confidence": 0.6514407207488948
+          "confidence": 0.6514407207488947
         },
         "gb": {
           "prediction": 1,
@@ -93,30 +93,40 @@
       }
     },
     "improved_recommendation": "📈 สัญญาณดีมาก! แนวโน้มขาขึ้นแข็งแกร่ง เหมาะลงทุนหุ้น",
+    "risk_management": {
+      "allocation": 77,
+      "allocation_decimal": 0.77,
+      "reason": "Confidence ดี (73.6%) | Deep drawdown (-21.2%) → oversold",
+      "risk_adjusted": true,
+      "original_confidence": 0.7364976476994545,
+      "volatility": 2.74,
+      "drawdown": -21.18,
+      "trend_score": 100
+    },
     "multi_fund": {
       "default": {
-        "PEA-F": 21,
-        "PEA-E": 29,
+        "PEA-F": 20,
+        "PEA-E": 31,
         "PEA-G": 31,
-        "PEA-P": 19
+        "PEA-P": 18
       },
       "conservative": {
-        "PEA-F": 26,
-        "PEA-E": 24,
+        "PEA-F": 25,
+        "PEA-E": 26,
         "PEA-G": 26,
-        "PEA-P": 24
+        "PEA-P": 23
       },
       "moderate": {
-        "PEA-F": 21,
-        "PEA-E": 29,
+        "PEA-F": 20,
+        "PEA-E": 31,
         "PEA-G": 31,
-        "PEA-P": 19
+        "PEA-P": 18
       },
       "aggressive": {
-        "PEA-F": 16,
-        "PEA-E": 32,
-        "PEA-G": 33,
-        "PEA-P": 19
+        "PEA-F": 14,
+        "PEA-E": 33,
+        "PEA-G": 35,
+        "PEA-P": 18
       },
       "market_data": {
         "PEA-E": {
@@ -127,10 +137,10 @@
           "trend": 0.5
         },
         "PEA-G": {
-          "return_1m": 1.2331170300263317,
-          "return_3m": 1.97300830516427,
-          "return_6m": 10.921566443353914,
-          "volatility": 11.406919585761488,
+          "return_1m": 0.6350298732303195,
+          "return_3m": 1.3705498568179486,
+          "return_6m": 10.266239745453376,
+          "volatility": 11.44350257162037,
           "trend": 0.5
         },
         "PEA-P": {
