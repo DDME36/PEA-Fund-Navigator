@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-01-27 21:50:26",
-  "updated_timestamp": "2026-01-27T21:50:26.258927",
+  "updated_at": "2026-02-03 19:13:46",
+  "updated_timestamp": "2026-02-03T19:13:46.572229",
   "prediction": {
     "ticker": "TDEX.BK",
-    "date": "2026-01",
+    "date": "2026-02",
     "prediction": "Bearish",
-    "probability": 0.7983540592046857,
-    "recommended_allocation": 20,
+    "probability": 0.7032317559187663,
+    "recommended_allocation": 29,
     "allocation_reasoning": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
     "weather": "🌧️ พายุเข้า",
     "action": "⚠️ อันตราย! หลบไป PEA-F เต็มที่",
@@ -14,29 +14,29 @@
       "individual_models": {
         "xgb": {
           "prediction": 0,
-          "confidence": 0.9001843333244324
+          "confidence": 0.7899156808853149
         },
         "rf": {
           "prediction": 0,
-          "confidence": 0.6656004968802285
+          "confidence": 0.6278436595133692
         },
         "gb": {
           "prediction": 0,
-          "confidence": 0.8292773474093961
+          "confidence": 0.6919359273576147
         }
       },
       "ensemble_proba": {
-        "down": 0.7983540592046857,
-        "up": 0.20164593582826063
+        "down": 0.7032317559187663,
+        "up": 0.29676824904828747
       }
     },
     "ml_features": {
-      "Return_1m": 5.8,
-      "Return_3m": 4.17,
-      "RSI_6": 78.8,
-      "Price_SMA6_Ratio": 5.85,
-      "Volatility_3m": 4.45,
-      "Drawdown": -0.37
+      "Return_1m": 0.59,
+      "Return_3m": 4.79,
+      "RSI_6": 76.8,
+      "Price_SMA6_Ratio": 2.5,
+      "Volatility_3m": 0.98,
+      "Drawdown": -2.88
     },
     "top_features": [
       {
@@ -65,9 +65,9 @@
       "trend_icon": "📈",
       "trend_score": 100,
       "momentum": {
-        "1m": 5.8,
-        "3m": 4.17,
-        "6m": 9.92
+        "1m": 0.59,
+        "3m": 4.79,
+        "6m": 7.57
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -77,50 +77,40 @@
       "comparison": {
         "recommendation": "PEA-F ปลอดภัยกว่า",
         "reason": "ตราสารหนี้ (0.2%) มั่นคงกว่าในช่วงนี้",
-        "expected_equity": 0.14,
+        "expected_equity": -1.23,
         "bond_return": 0.2
       }
     }
   },
   "backtest": {
     "period": {
-      "start": "2024-11",
-      "end": "2026-01",
+      "start": "2024-12",
+      "end": "2026-02",
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": 13.86,
-      "buy_hold_return_pct": -0.16,
-      "excess_return_pct": 14.01
+      "strategy_return_pct": 12.05,
+      "buy_hold_return_pct": -1.14,
+      "excess_return_pct": 13.19
     },
     "metrics": {
-      "win_rate_pct": 71.4,
+      "win_rate_pct": 64.3,
       "total_trades": 14,
-      "correct_trades": 10,
-      "sharpe_ratio": 1.8,
+      "correct_trades": 9,
+      "sharpe_ratio": 1.66,
       "max_drawdown_pct": -1.18,
-      "volatility_pct": 6.31
+      "volatility_pct": 5.98
     },
     "history": [
-      {
-        "date": "2024-11",
-        "allocation": 0,
-        "prediction": "ลง",
-        "actual": "ลง",
-        "correct": true,
-        "strategy_value": 100.3,
-        "buyhold_value": 98.46,
-        "bond_value": 100.3
-      },
       {
         "date": "2024-12",
         "allocation": 0,
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 100.6,
-        "buyhold_value": 93.45,
-        "bond_value": 100.6
+        "strategy_value": 100.3,
+        "buyhold_value": 94.92,
+        "bond_value": 100.3
       },
       {
         "date": "2025-01",
@@ -128,9 +118,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 100.9,
-        "buyhold_value": 83.98,
-        "bond_value": 100.9
+        "strategy_value": 100.6,
+        "buyhold_value": 85.3,
+        "bond_value": 100.6
       },
       {
         "date": "2025-02",
@@ -138,9 +128,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 99.75,
-        "buyhold_value": 81.82,
-        "bond_value": 101.21
+        "strategy_value": 99.45,
+        "buyhold_value": 83.1,
+        "bond_value": 100.9
       },
       {
         "date": "2025-03",
@@ -148,9 +138,9 @@
         "prediction": "ขึ้น",
         "actual": "ขึ้น",
         "correct": true,
-        "strategy_value": 104.34,
-        "buyhold_value": 85.58,
-        "bond_value": 101.51
+        "strategy_value": 104.03,
+        "buyhold_value": 86.92,
+        "bond_value": 101.21
       },
       {
         "date": "2025-04",
@@ -158,9 +148,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 103.11,
-        "buyhold_value": 83.3,
-        "bond_value": 101.81
+        "strategy_value": 102.8,
+        "buyhold_value": 84.6,
+        "bond_value": 101.51
       },
       {
         "date": "2025-05",
@@ -168,9 +158,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 103.42,
-        "buyhold_value": 79.31,
-        "bond_value": 102.12
+        "strategy_value": 103.11,
+        "buyhold_value": 80.55,
+        "bond_value": 101.81
       },
       {
         "date": "2025-06",
@@ -178,9 +168,9 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 108.14,
-        "buyhold_value": 90.83,
-        "bond_value": 102.43
+        "strategy_value": 107.82,
+        "buyhold_value": 92.25,
+        "bond_value": 102.12
       },
       {
         "date": "2025-07",
@@ -188,9 +178,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 108.47,
-        "buyhold_value": 90.49,
-        "bond_value": 102.73
+        "strategy_value": 108.14,
+        "buyhold_value": 91.9,
+        "bond_value": 102.43
       },
       {
         "date": "2025-08",
@@ -198,9 +188,9 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 108.79,
-        "buyhold_value": 92.54,
-        "bond_value": 103.04
+        "strategy_value": 108.47,
+        "buyhold_value": 93.99,
+        "bond_value": 102.73
       },
       {
         "date": "2025-09",
@@ -208,9 +198,9 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 109.12,
-        "buyhold_value": 95.85,
-        "bond_value": 103.35
+        "strategy_value": 108.79,
+        "buyhold_value": 97.35,
+        "bond_value": 103.04
       },
       {
         "date": "2025-10",
@@ -218,9 +208,9 @@
         "prediction": "ลง",
         "actual": "ลง",
         "correct": true,
-        "strategy_value": 109.45,
-        "buyhold_value": 92.88,
-        "bond_value": 103.66
+        "strategy_value": 109.12,
+        "buyhold_value": 94.34,
+        "bond_value": 103.35
       },
       {
         "date": "2025-11",
@@ -228,9 +218,9 @@
         "prediction": "ขึ้น",
         "actual": "ขึ้น",
         "correct": true,
-        "strategy_value": 110.48,
-        "buyhold_value": 94.37,
-        "bond_value": 103.97
+        "strategy_value": 110.15,
+        "buyhold_value": 95.85,
+        "bond_value": 103.66
       },
       {
         "date": "2025-12",
@@ -238,8 +228,18 @@
         "prediction": "ลง",
         "actual": "ขึ้น",
         "correct": false,
-        "strategy_value": 113.86,
-        "buyhold_value": 99.84,
+        "strategy_value": 111.72,
+        "buyhold_value": 98.28,
+        "bond_value": 103.97
+      },
+      {
+        "date": "2026-01",
+        "allocation": 0,
+        "prediction": "ลง",
+        "actual": "ขึ้น",
+        "correct": false,
+        "strategy_value": 112.05,
+        "buyhold_value": 98.86,
         "bond_value": 104.28
       }
     ]
