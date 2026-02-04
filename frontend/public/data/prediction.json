@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-02-03 22:51:01",
-  "updated_timestamp": "2026-02-03T22:51:01.414367",
+  "updated_at": "2026-02-04 09:10:05",
+  "updated_timestamp": "2026-02-04T09:10:05.433778",
   "prediction": {
     "ticker": "^SET.BK",
     "date": "2026-02",
@@ -18,7 +18,7 @@
         },
         "rf": {
           "prediction": 1,
-          "confidence": 0.6514407207488947
+          "confidence": 0.6514407207488948
         },
         "gb": {
           "prediction": 1,
@@ -106,25 +106,25 @@
     "multi_fund": {
       "default": {
         "PEA-F": 18,
-        "PEA-E": 31,
+        "PEA-E": 32,
         "PEA-G": 33,
-        "PEA-P": 18
+        "PEA-P": 17
       },
       "conservative": {
         "PEA-F": 23,
-        "PEA-E": 26,
+        "PEA-E": 27,
         "PEA-G": 28,
-        "PEA-P": 23
+        "PEA-P": 22
       },
       "moderate": {
         "PEA-F": 18,
-        "PEA-E": 31,
+        "PEA-E": 32,
         "PEA-G": 33,
-        "PEA-P": 18
+        "PEA-P": 17
       },
       "aggressive": {
-        "PEA-F": 13,
-        "PEA-E": 34,
+        "PEA-F": 12,
+        "PEA-E": 35,
         "PEA-G": 36,
         "PEA-P": 17
       },
@@ -137,18 +137,18 @@
           "trend": 0.5
         },
         "PEA-G": {
-          "return_1m": 0.7612237023676416,
-          "return_3m": 1.4976660097549832,
-          "return_6m": 10.404510872670025,
-          "volatility": 11.425595159161176,
-          "trend": 0.5
+          "return_1m": 0.22834164273266566,
+          "return_3m": 0.960889228726769,
+          "return_6m": 9.82062968320967,
+          "volatility": 11.537851697449266,
+          "trend": 0.0
         },
         "PEA-P": {
-          "return_1m": -2.301516680767627,
-          "return_3m": 10.370799893202479,
-          "return_6m": 21.12059578884674,
+          "return_1m": -2.052759505850895,
+          "return_3m": 10.646704874724307,
+          "return_6m": 21.423951687682546,
           "volatility": 8,
-          "trend": 3.45693329773416
+          "trend": 3.5489016249081025
         },
         "PEA-F": {
           "return_1m": 0.2,
