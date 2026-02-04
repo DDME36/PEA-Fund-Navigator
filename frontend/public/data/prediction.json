@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-02-04 09:10:05",
-  "updated_timestamp": "2026-02-04T09:10:05.433778",
+  "updated_at": "2026-02-04 20:25:17",
+  "updated_timestamp": "2026-02-04T20:25:17.618154",
   "prediction": {
     "ticker": "^SET.BK",
     "date": "2026-02",
     "prediction": "Bullish",
-    "probability": 0.7364976476994545,
+    "probability": 0.7330220100881322,
     "recommended_allocation": 77,
     "allocation_reasoning": "สัญญาณดีมาก! แนะนำ PEA-E 73%",
     "weather": "☀️ ฟ้าเปิด",
@@ -18,36 +18,36 @@
         },
         "rf": {
           "prediction": 1,
-          "confidence": 0.6514407207488948
+          "confidence": 0.6494263704964365
         },
         "gb": {
           "prediction": 1,
-          "confidence": 0.8063341723796746
+          "confidence": 0.7909703345755216
         }
       },
       "ensemble_proba": {
-        "down": 0.21694836494535363,
-        "up": 0.7830516350546465
+        "down": 0.22274109429755737,
+        "up": 0.7772589057024426
       },
       "adjustment": {
         "base_prediction": "Bullish",
-        "base_confidence": 0.7830516350546465,
+        "base_confidence": 0.7772589057024426,
         "trend_score": 1.0,
         "bullish_signals": 4,
         "bearish_signals": 2,
         "signal_ratio": 0.6666666666666666,
         "adjusted_prediction": "Bullish",
-        "adjusted_confidence": 0.7364976476994545,
+        "adjusted_confidence": 0.7330220100881322,
         "changed": false
       }
     },
     "ml_features": {
-      "Return_1m": 0.79,
-      "Return_3m": 6.32,
-      "RSI_6": 74.3,
-      "Price_SMA6_Ratio": 3.28,
-      "Volatility_3m": 2.74,
-      "Drawdown": -21.18
+      "Return_1m": 1.58,
+      "Return_3m": 7.15,
+      "RSI_6": 75.5,
+      "Price_SMA6_Ratio": 3.95,
+      "Volatility_3m": 2.59,
+      "Drawdown": -20.57
     },
     "top_features": [
       {
@@ -76,9 +76,9 @@
       "trend_icon": "📈",
       "trend_score": 100,
       "momentum": {
-        "1m": 0.79,
-        "3m": 6.32,
-        "6m": 8.05
+        "1m": 1.58,
+        "3m": 7.15,
+        "6m": 8.89
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -87,8 +87,8 @@
       },
       "comparison": {
         "recommendation": "PEA-E น่าสนใจกว่า",
-        "reason": "คาดผลตอบแทนหุ้น (1.8%) > ตราสารหนี้ (0.2%)",
-        "expected_equity": 1.8,
+        "reason": "คาดผลตอบแทนหุ้น (2.0%) > ตราสารหนี้ (0.2%)",
+        "expected_equity": 2.03,
         "bond_return": 0.2
       }
     },
@@ -96,29 +96,29 @@
     "risk_management": {
       "allocation": 77,
       "allocation_decimal": 0.77,
-      "reason": "Confidence ดี (73.6%) | Deep drawdown (-21.2%) → oversold",
+      "reason": "Confidence ดี (73.3%) | Deep drawdown (-20.6%) → oversold",
       "risk_adjusted": true,
-      "original_confidence": 0.7364976476994545,
-      "volatility": 2.74,
-      "drawdown": -21.18,
+      "original_confidence": 0.7330220100881322,
+      "volatility": 2.59,
+      "drawdown": -20.57,
       "trend_score": 100
     },
     "multi_fund": {
       "default": {
-        "PEA-F": 18,
-        "PEA-E": 32,
+        "PEA-F": 17,
+        "PEA-E": 33,
         "PEA-G": 33,
         "PEA-P": 17
       },
       "conservative": {
-        "PEA-F": 23,
-        "PEA-E": 27,
+        "PEA-F": 22,
+        "PEA-E": 28,
         "PEA-G": 28,
         "PEA-P": 22
       },
       "moderate": {
-        "PEA-F": 18,
-        "PEA-E": 32,
+        "PEA-F": 17,
+        "PEA-E": 33,
         "PEA-G": 33,
         "PEA-P": 17
       },
@@ -130,10 +130,10 @@
       },
       "market_data": {
         "PEA-E": {
-          "return_1m": 4.813491692611294,
-          "return_3m": 1.6323706339308464,
-          "return_6m": 8.302795472173962,
-          "volatility": 14.680423145040077,
+          "return_1m": 5.131095355272164,
+          "return_3m": 2.8285635022909483,
+          "return_6m": 8.230586847815369,
+          "volatility": 14.755392298964448,
           "trend": 0.5
         },
         "PEA-G": {
@@ -144,11 +144,11 @@
           "trend": 0.0
         },
         "PEA-P": {
-          "return_1m": -2.052759505850895,
-          "return_3m": 10.646704874724307,
-          "return_6m": 21.423951687682546,
+          "return_1m": -1.1780723344249768,
+          "return_3m": 11.336693009983316,
+          "return_6m": 23.35643317348574,
           "volatility": 8,
-          "trend": 3.5489016249081025
+          "trend": 3.7788976699944388
         },
         "PEA-F": {
           "return_1m": 0.2,
@@ -167,17 +167,17 @@
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": -4.15,
-      "buy_hold_return_pct": -4.58,
-      "excess_return_pct": 0.42
+      "strategy_return_pct": -3.41,
+      "buy_hold_return_pct": -3.83,
+      "excess_return_pct": 0.43
     },
     "metrics": {
       "win_rate_pct": 64.3,
       "total_trades": 14,
       "correct_trades": 9,
-      "sharpe_ratio": -0.15,
+      "sharpe_ratio": -0.1,
       "max_drawdown_pct": -12.03,
-      "volatility_pct": 16.37
+      "volatility_pct": 16.43
     },
     "history": [
       {
@@ -316,8 +316,8 @@
         "prediction": "ขึ้น",
         "actual": "ขึ้น",
         "correct": true,
-        "strategy_value": 95.85,
-        "buyhold_value": 95.42,
+        "strategy_value": 96.59,
+        "buyhold_value": 96.17,
         "bond_value": 104.28
       }
     ]
