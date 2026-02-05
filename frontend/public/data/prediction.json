@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-02-04 20:25:17",
-  "updated_timestamp": "2026-02-04T20:25:17.618154",
+  "updated_at": "2026-02-05 11:01:06",
+  "updated_timestamp": "2026-02-05T11:01:06.083489",
   "prediction": {
     "ticker": "^SET.BK",
     "date": "2026-02",
@@ -18,7 +18,7 @@
         },
         "rf": {
           "prediction": 1,
-          "confidence": 0.6494263704964365
+          "confidence": 0.6494263704964367
         },
         "gb": {
           "prediction": 1,
@@ -42,12 +42,12 @@
       }
     },
     "ml_features": {
-      "Return_1m": 1.58,
-      "Return_3m": 7.15,
-      "RSI_6": 75.5,
-      "Price_SMA6_Ratio": 3.95,
-      "Volatility_3m": 2.59,
-      "Drawdown": -20.57
+      "Return_1m": 1.32,
+      "Return_3m": 6.88,
+      "RSI_6": 75.1,
+      "Price_SMA6_Ratio": 3.73,
+      "Volatility_3m": 2.63,
+      "Drawdown": -20.77
     },
     "top_features": [
       {
@@ -76,9 +76,9 @@
       "trend_icon": "📈",
       "trend_score": 100,
       "momentum": {
-        "1m": 1.58,
-        "3m": 7.15,
-        "6m": 8.89
+        "1m": 1.32,
+        "3m": 6.88,
+        "6m": 8.61
       },
       "price_position": {
         "vs_sma3": "เหนือ",
@@ -88,7 +88,7 @@
       "comparison": {
         "recommendation": "PEA-E น่าสนใจกว่า",
         "reason": "คาดผลตอบแทนหุ้น (2.0%) > ตราสารหนี้ (0.2%)",
-        "expected_equity": 2.03,
+        "expected_equity": 1.95,
         "bond_return": 0.2
       }
     },
@@ -96,11 +96,11 @@
     "risk_management": {
       "allocation": 77,
       "allocation_decimal": 0.77,
-      "reason": "Confidence ดี (73.3%) | Deep drawdown (-20.6%) → oversold",
+      "reason": "Confidence ดี (73.3%) | Deep drawdown (-20.8%) → oversold",
       "risk_adjusted": true,
       "original_confidence": 0.7330220100881322,
-      "volatility": 2.59,
-      "drawdown": -20.57,
+      "volatility": 2.63,
+      "drawdown": -20.77,
       "trend_score": 100
     },
     "multi_fund": {
@@ -130,25 +130,25 @@
       },
       "market_data": {
         "PEA-E": {
-          "return_1m": 5.131095355272164,
-          "return_3m": 2.8285635022909483,
-          "return_6m": 8.230586847815369,
-          "volatility": 14.755392298964448,
+          "return_1m": 7.139438556399735,
+          "return_3m": 2.6160162750470173,
+          "return_6m": 8.109631100727688,
+          "volatility": 14.741610524693597,
           "trend": 0.5
         },
         "PEA-G": {
-          "return_1m": 0.22834164273266566,
-          "return_3m": 0.960889228726769,
-          "return_6m": 9.82062968320967,
-          "volatility": 11.537851697449266,
+          "return_1m": -0.8941860400530355,
+          "return_3m": 1.6417277191004942,
+          "return_6m": 8.473681120193554,
+          "volatility": 11.581492297029085,
           "trend": 0.0
         },
         "PEA-P": {
-          "return_1m": -1.1780723344249768,
-          "return_3m": 11.336693009983316,
-          "return_6m": 23.35643317348574,
+          "return_1m": -0.9950239550184555,
+          "return_3m": 12.591879498591908,
+          "return_6m": 23.45543854949518,
           "volatility": 8,
-          "trend": 3.7788976699944388
+          "trend": 4.197293166197302
         },
         "PEA-F": {
           "return_1m": 0.2,
@@ -167,17 +167,17 @@
       "months": 14
     },
     "returns": {
-      "strategy_return_pct": -3.41,
-      "buy_hold_return_pct": -3.83,
+      "strategy_return_pct": -3.65,
+      "buy_hold_return_pct": -4.08,
       "excess_return_pct": 0.43
     },
     "metrics": {
       "win_rate_pct": 64.3,
       "total_trades": 14,
       "correct_trades": 9,
-      "sharpe_ratio": -0.1,
+      "sharpe_ratio": -0.12,
       "max_drawdown_pct": -12.03,
-      "volatility_pct": 16.43
+      "volatility_pct": 16.4
     },
     "history": [
       {
@@ -316,8 +316,8 @@
         "prediction": "ขึ้น",
         "actual": "ขึ้น",
         "correct": true,
-        "strategy_value": 96.59,
-        "buyhold_value": 96.17,
+        "strategy_value": 96.35,
+        "buyhold_value": 95.92,
         "bond_value": 104.28
       }
     ]
